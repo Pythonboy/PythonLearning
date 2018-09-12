@@ -1,0 +1,774 @@
+NumPy provides familiar mathematical functions such as sin, cos, and exp. In NumPy, these are called “universal functions”
+(ufunc). Within NumPy, these functions operate elementwise on an array, producing an array as output.
+
+>>> B = np.arange(3)
+>>> B
+array([0, 1, 2])
+>>> np.exp(B)
+array([ 1.        ,  2.71828183,  7.3890561 ])
+>>> np.sqrt(B)
+array([ 0.        ,  1.        ,  1.41421356])
+>>> C = np.array([2., -1., 4.])
+>>> np.add(B, C)
+array([ 2.,  0.,  6.])
+
+
+numpy.all:
+numpy.all(a, axis=None, out=None, keepdims=<no value>)
+Test whether all array elements along a given axis evaluate to True.
+Not a Number (NaN), positive infinity and negative infinity evaluate to True because these are not equal to zero.
+>>> np.all([[True,False],[True,True]])
+False
+>>> np.all([[True,False],[True,True]], axis=0)
+array([ True, False])
+>>> np.all([-1, 4, 5])
+True
+>>> np.all([1.0, np.nan])
+True
+>>> o=np.array([False])
+>>> z=np.all([-1, 4, 5], out=o)
+>>> id(z), id(o), z                             
+(28293632, 28293632, array([ True]))
+
+
+numpy.any:
+numpy.any(a, axis=None, out=None, keepdims=<no value>)
+Test whether any array element along a given axis evaluates to True.
+Returns single boolean unless axis is not None
+>>> np.any([[True, False], [True, True]])
+True
+>>>
+>>> np.any([[True, False], [False, False]], axis=0)
+array([ True, False])
+>>>
+>>> np.any([-1, 0, 5])
+True
+>>>
+>>> np.any(np.nan)
+True
+>>>
+>>> o=np.array([False])
+>>> z=np.any([-1, 4, 5], out=o)
+>>> z, o
+(array([ True]), array([ True]))
+>>> # Check now that z is a reference to o
+>>> z is o
+True
+>>> id(z), id(o) # identity of z and o              
+(191614240, 191614240)
+
+
+numpy.argmax:
+numpy.argmax(a, axis=None, out=None)
+Returns the indices of the maximum values along an axis.
+>>> a = np.arange(6).reshape(2,3)
+>>> a
+array([[0, 1, 2],
+       [3, 4, 5]])
+>>> np.argmax(a)
+5
+>>> np.argmax(a, axis=0)
+array([1, 1, 1])
+>>> np.argmax(a, axis=1)
+array([2, 2])
+
+
+numpy.argmin:
+numpy.argmin(a, axis=None, out=None)
+Returns the indices of the minimum values along an axis.
+
+>>> a = np.arange(6).reshape(2,3)
+>>> a
+array([[0, 1, 2],
+       [3, 4, 5]])
+>>> np.argmin(a)
+0
+>>> np.argmin(a, axis=0)
+array([0, 0, 0])
+>>> np.argmin(a, axis=1)
+array([0, 0])
+
+
+numpy.argsort:
+numpy.argsort(a, axis=-1, kind='quicksort', order=None)
+Returns the indices that would sort an array.
+Perform an indirect sort along the given axis using the algorithm specified by the kind keyword. It returns an array of 
+indices of the same shape as a that index data along the given axis in sorted order.
+One dimensional array:
+>>> x = np.array([3, 1, 2])
+>>> np.argsort(x)
+array([1, 2, 0])
+Two-dimensional array:
+>>> x = np.array([[0, 3], [2, 2]])
+>>> x
+array([[0, 3],
+       [2, 2]])
+>>> np.argsort(x, axis=0)  # sorts along first axis (down)
+array([[0, 1],
+       [1, 0]])
+>>> np.argsort(x, axis=1)  # sorts along last axis (across)
+array([[0, 1],
+       [0, 1]])
+Indices of the sorted elements of a N-dimensional array:
+>>> ind = np.unravel_index(np.argsort(x, axis=None), x.shape)
+>>> ind
+(array([0, 1, 1, 0]), array([0, 0, 1, 1]))
+>>> x[ind]  # same as np.sort(x, axis=None)
+array([0, 2, 2, 3])
+Sorting with keys:
+>>> x = np.array([(1, 0), (0, 1)], dtype=[('x', '<i4'), ('y', '<i4')])
+>>> x
+array([(1, 0), (0, 1)],
+      dtype=[('x', '<i4'), ('y', '<i4')])
+>>> np.argsort(x, order=('x','y'))
+array([1, 0])
+>>> np.argsort(x, order=('y','x'))
+array([0, 1])
+
+
+numpy.average:
+Compute the weighted average along the specified axis
+>>> data = range(1,5)
+>>> data
+[1, 2, 3, 4]
+>>> np.average(data)
+2.5
+>>> np.average(range(1,11), weights=range(10,0,-1))
+4.0
+>>>
+>>> data = np.arange(6).reshape((3,2))
+>>> data
+array([[0, 1],
+       [2, 3],
+       [4, 5]])
+>>> np.average(data, axis=1, weights=[1./4, 3./4])
+array([ 0.75,  2.75,  4.75])
+>>> np.average(data, weights=[1./4, 3./4])
+Traceback (most recent call last):
+...
+TypeError: Axis must be specified when shapes of a and weights differ.
+
+
+np.bincount:
+注：可以用直方图来理解：下标代表原数组中的数字，值代表原数组中下标出现的次数，size等于原数组中最大值+1
+numpy.bincount(x, weights=None, minlength=0)
+Count number of occurrences of each value in array of non-negative ints.
+The number of bins (of size 1) is one larger than the largest value in x. If minlength is specified, there will be at 
+least this number of bins in the output array (though it will be longer if necessary, depending on the contents of x). 
+Each bin gives the number of occurrences of its index value in x. If weights is specified the input array is weighted by 
+it, i.e. if a value n is found at position i, out[n] += weight[i] instead of out[n] += 1.
+>>> np.bincount(np.arange(5))
+array([1, 1, 1, 1, 1])
+>>> np.bincount(np.array([0, 1, 1, 3, 2, 1, 7]))
+array([1, 3, 1, 1, 0, 0, 0, 1])
+>>> x = np.array([0, 1, 1, 3, 2, 1, 7, 23])
+>>> np.bincount(x).size == np.amax(x)+1
+True
+The input array needs to be of integer dtype, otherwise a TypeError is raised:
+>>> np.bincount(np.arange(5, dtype=float))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: array cannot be safely cast to required type
+A possible use of bincount is to perform sums over variable-size chunks of an array, using the weights keyword.
+>>> w = np.array([0.3, 0.5, 0.2, 0.7, 1., -0.6]) # weights
+>>> x = np.array([0, 1, 1, 2, 2, 2])
+>>> np.bincount(x,  weights=w)
+array([ 0.3,  0.7,  1.1])
+
+
+numpy.ceil:
+numpy.ceil(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])
+Return the ceiling of the input, element-wise.
+The ceil of the scalar x is the smallest integer i, such that i >= x. It is often denoted as \lceil x \rceil.
+>>> a = np.array([-1.7, -1.5, -0.2, 0.2, 1.5, 1.7, 2.0])
+>>> np.ceil(a)
+array([-1., -1., -0.,  1.,  2.,  2.,  2.])
+
+
+numpy.clip:
+numpy.clip(a, a_min, a_max, out=None)
+Clip (limit) the values in an array.
+Given an interval, values outside the interval are clipped to the interval edges. For example, if an interval of [0, 1]
+is specified, values smaller than 0 become 0, and values larger than 1 become 1.
+>>> a = np.arange(10)
+>>> np.clip(a, 1, 8)
+array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])
+>>> a
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+>>> np.clip(a, 3, 6, out=a)
+array([3, 3, 3, 3, 4, 5, 6, 6, 6, 6])
+>>> a = np.arange(10)
+>>> a
+array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+>>> np.clip(a, [3, 4, 1, 1, 1, 4, 4, 4, 4, 4], 8)
+array([3, 4, 2, 3, 4, 5, 6, 7, 8, 8])
+
+
+numpy.cov:
+numpy.cov(m, y=None, rowvar=True, bias=False, ddof=None, fweights=None, aweights=None)
+Estimate a covariance matrix, given data and weights.
+Covariance indicates the level to which two variables vary together. If we examine N-dimensional samples, 
+X = [x_1, x_2, ... x_N]^T, then the covariance matrix element C_{ij} is the covariance of x_i and x_j. The element C_{ii} 
+is the variance of x_i.
+See the notes for an outline of the algorithm.
+Note:
+Assume that the observations are in the columns of the observation array m and let f = fweights and a = aweights for brevity. 
+The steps to compute the weighted covariance are as follows:
+>>> w = f * a
+>>> v1 = np.sum(w)
+>>> v2 = np.sum(w * a)
+>>> m -= np.sum(m * w, axis=1, keepdims=True) / v1
+>>> cov = np.dot(m * w, m.T) * v1 / (v1**2 - ddof * v2)
+Note that when a == 1, the normalization factor v1 / (v1**2 - ddof * v2) goes over to 1 / (np.sum(f) - ddof) as it should.
+
+Consider two variables, x_0 and x_1, which correlate perfectly, but in opposite directions:
+
+>>> x = np.array([[0, 2], [1, 1], [2, 0]]).T
+>>> x
+array([[0, 1, 2],
+       [2, 1, 0]])
+Note how x_0 increases while x_1 decreases. The covariance matrix shows this clearly:
+
+>>> np.cov(x)
+array([[ 1., -1.],
+       [-1.,  1.]])
+Note that element C_{0,1}, which shows the correlation between x_0 and x_1, is negative.
+
+Further, note how x and y are combined:
+
+>>> x = [-2.1, -1,  4.3]
+>>> y = [3,  1.1,  0.12]
+>>> X = np.stack((x, y), axis=0)
+>>> print(np.cov(X))
+[[ 11.71        -4.286     ]
+ [ -4.286        2.14413333]]
+>>> print(np.cov(x, y))
+[[ 11.71        -4.286     ]
+ [ -4.286        2.14413333]]
+>>> print(np.cov(x))
+11.71
+
+
+numpy.cross:
+Return the cross product of two (arrays of) vectors.
+The cross product of a and b in R^3 is a vector perpendicular to both a and b. If a and b are arrays of vectors, the
+vectors are defined by the last axis of a and b by default, and these axes can have dimensions 2 or 3. Where the
+dimension of either a or b is 2, the third component of the input vector is assumed to be zero and the cross product 
+calculated accordingly. In cases where both input vectors have dimension 2, the z-component of the cross product is 
+returned.
+Vector cross-product.
+
+>>>
+>>> x = [1, 2, 3]
+>>> y = [4, 5, 6]
+>>> np.cross(x, y)
+array([-3,  6, -3])
+One vector with dimension 2.
+
+>>>
+>>> x = [1, 2]
+>>> y = [4, 5, 6]
+>>> np.cross(x, y)
+array([12, -6, -3])
+Equivalently:
+
+>>>
+>>> x = [1, 2, 0]
+>>> y = [4, 5, 6]
+>>> np.cross(x, y)
+array([12, -6, -3])
+Both vectors with dimension 2.
+
+>>>
+>>> x = [1,2]
+>>> y = [4,5]
+>>> np.cross(x, y)
+-3
+Multiple vector cross-products. Note that the direction of the cross product vector is defined by the right-hand rule.
+
+>>>
+>>> x = np.array([[1,2,3], [4,5,6]])
+>>> y = np.array([[4,5,6], [1,2,3]])
+>>> np.cross(x, y)
+array([[-3,  6, -3],
+       [ 3, -6,  3]])
+The orientation of c can be changed using the axisc keyword.
+>>> np.cross(x, y, axisc=0)
+array([[-3,  3],
+       [ 6, -6],
+       [-3,  3]])
+Change the vector definition of x and y using axisa and axisb.
+>>> x = np.array([[1,2,3], [4,5,6], [7, 8, 9]])
+>>> y = np.array([[7, 8, 9], [4,5,6], [1,2,3]])
+>>> np.cross(x, y)
+array([[ -6,  12,  -6],
+       [  0,   0,   0],
+       [  6, -12,   6]])
+>>> np.cross(x, y, axisa=0, axisb=0)
+array([[-24,  48, -24],
+       [-30,  60, -30],
+       [-36,  72, -36]])
+
+
+numpy.cumprod:
+numpy.cumprod(a, axis=None, dtype=None, out=None)
+>>> a = np.array([1,2,3])
+>>> np.cumprod(a) # intermediate results 1, 1*2
+...               # total product 1*2*3 = 6
+array([1, 2, 6])
+>>> a = np.array([[1, 2, 3], [4, 5, 6]])
+>>> np.cumprod(a, dtype=float) # specify type of output
+array([   1.,    2.,    6.,   24.,  120.,  720.])
+The cumulative product for each column (i.e., over the rows) of a:
+>>> np.cumprod(a, axis=0)
+array([[ 1,  2,  3],
+       [ 4, 10, 18]])
+>>> np.cumprod(a,axis=1)
+array([[  1,   2,   6],
+       [  4,  20, 120]])
+
+
+numpy.cumsum:
+Return the cumulative sum of the elements along a given axis.
+>>> a = np.array([[1,2,3], [4,5,6]])
+>>> a
+array([[1, 2, 3],
+       [4, 5, 6]])
+>>> np.cumsum(a)
+array([ 1,  3,  6, 10, 15, 21])
+>>> np.cumsum(a, dtype=float)     # specifies type of output value(s)
+array([  1.,   3.,   6.,  10.,  15.,  21.])
+>>> np.cumsum(a,axis=0)      # sum over rows for each of the 3 columns
+array([[1, 2, 3],
+       [5, 7, 9]])
+>>> np.cumsum(a,axis=1)      # sum over columns for each of the 2 rows
+array([[ 1,  3,  6],
+       [ 4,  9, 15]])
+
+
+numpy.diff:
+numpy.diff(a, n=1, axis=-1)
+Calculate the n-th discrete difference along the given axis.
+The first difference is given by out[n] = a[n+1] - a[n] along the given axis, higher differences are calculated by using 
+diff recursively.
+
+>>> x = np.array([1, 2, 4, 7, 0])
+>>> np.diff(x)
+array([ 1,  2,  3, -7])
+>>> np.diff(x, n=2)
+array([  1,   1, -10])
+>>> x = np.array([[1, 3, 6, 10], [0, 5, 6, 8]])
+>>> np.diff(x)
+array([[2, 3, 4],
+       [5, 1, 2]])
+>>> np.diff(x, axis=0)
+array([[-1,  2,  0, -2]])
+>>> x = np.arange('1066-10-13', '1066-10-16', dtype=np.datetime64)
+>>> np.diff(x)
+array([1, 1], dtype='timedelta64[D]')
+
+
+numpy.dot:
+numpy.dot(a, b, out=None)
+Dot product of two arrays. Specifically,
+If both a and b are 1-D arrays, it is inner product of vectors (without complex conjugation).
+If both a and b are 2-D arrays, it is matrix multiplication, but using matmul or a @ b is preferred.
+If either a or b is 0-D (scalar), it is equivalent to multiply and using numpy.multiply(a, b) or a * b is preferred.
+If a is an N-D array and b is a 1-D array, it is a sum product over the last axis of a and b.
+If a is an N-D array and b is an M-D array (where M>=2), it is a sum product over the last axis of a and the
+second-to-last axis of b:
+dot(a, b)[i,j,k,m] = sum(a[i,j,:] * b[k,:,m])
+
+>>> np.dot(3, 4)
+12
+Neither argument is complex-conjugated:
+>>> np.dot([2j, 3j], [2j, 3j])
+(-13+0j)
+For 2-D arrays it is the matrix product:
+>>> a = [[1, 0], [0, 1]]
+>>> b = [[4, 1], [2, 2]]
+>>> np.dot(a, b)
+array([[4, 1],
+       [2, 2]])
+>>> a = np.arange(3*4*5*6).reshape((3,4,5,6))
+>>> b = np.arange(3*4*5*6)[::-1].reshape((5,4,6,3))
+>>> np.dot(a, b)[2,3,2,1,2,2]
+499128
+>>> sum(a[2,3,2,:] * b[1,2,:,2])
+499128
+
+
+numpy.floor:
+numpy.floor(x, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj]) 
+Return the floor of the input, element-wise.
+The floor of the scalar x is the largest integer i, such that i <= x. It is often denoted as \lfloor x \rfloor.
+Notes:
+Some spreadsheet programs calculate the “floor-towards-zero”, in other words floor(-2.5) == -2. NumPy instead uses 
+the definition of floor where floor(-2.5) == -3.
+>>> a = np.array([-1.7, -1.5, -0.2, 0.2, 1.5, 1.7, 2.0])
+>>> np.floor(a)
+array([-2., -2., -1.,  0.,  1.,  1.,  2.])
+
+
+numpy.inner:
+numpy.inner(a, b)
+Inner product of two arrays.
+Ordinary inner product of vectors for 1-D arrays (without complex conjugation), in higher dimensions a sum product over 
+the last axes.
+
+Notes
+For vectors (1-D arrays) it computes the ordinary inner-product:
+np.inner(a, b) = sum(a[:]*b[:])
+More generally, if ndim(a) = r > 0 and ndim(b) = s > 0:
+np.inner(a, b) = np.tensordot(a, b, axes=(-1,-1))
+or explicitly:
+np.inner(a, b)[i0,...,ir-1,j0,...,js-1]
+     = sum(a[i0,...,ir-1,:]*b[j0,...,js-1,:])
+In addition a or b may be scalars, in which case:
+np.inner(a,b) = a*b
+Examples
+Ordinary inner product for vectors:
+>>> a = np.array([1,2,3])
+>>> b = np.array([0,1,0])
+>>> np.inner(a, b)
+2
+A multidimensional example:
+>>> a = np.arange(24).reshape((2,3,4))
+>>> b = np.arange(4)
+>>> np.inner(a, b)
+array([[ 14,  38,  62],
+       [ 86, 110, 134]])
+An example where b is a scalar:
+>>> np.inner(np.eye(2), 7)
+array([[ 7.,  0.],
+       [ 0.,  7.]])
+
+
+numpy.maximun:
+Element-wise maximum of array elements.
+Compare two arrays and returns a new array containing the element-wise maxima. If one of the elements being compared is 
+a NaN, then that element is returned. If both elements are NaNs then the first is returned. The latter distinction is 
+important for complex NaNs, which are defined as at least one of the real or imaginary parts being a NaN. The net effect 
+is that NaNs are propagated.
+>>> np.maximum([2, 3, 4], [1, 5, 2])
+array([2, 5, 4])
+>>> np.maximum(np.eye(2), [0.5, 2]) # broadcasting
+array([[ 1. ,  2. ],
+       [ 0.5,  2. ]])
+>>> np.maximum([np.nan, 0, np.nan], [0, np.nan, np.nan])
+array([ NaN,  NaN,  NaN])
+>>> np.maximum(np.Inf, 1)
+inf
+
+
+numpy.mean:
+numpy.mean(a, axis=None, dtype=None, out=None, keepdims=<no value>)
+Compute the arithmetic mean along the specified axis.
+Returns the average of the array elements. The average is taken over the flattened array by default, otherwise over the
+specified axis. float64 intermediate and return values are used for integer inputs.
+>>> a = np.array([[1, 2], [3, 4]])
+>>> np.mean(a)
+2.5
+>>> np.mean(a, axis=0)
+array([ 2.,  3.])
+>>> np.mean(a, axis=1)
+array([ 1.5,  3.5])
+In single precision, mean can be inaccurate:
+>>> a = np.zeros((2, 512*512), dtype=np.float32)
+>>> a[0, :] = 1.0
+>>> a[1, :] = 0.1
+>>> np.mean(a)
+0.54999924
+Computing the mean in float64 is more accurate:
+>>> np.mean(a, dtype=np.float64)
+0.55000000074505806
+
+
+numpy.median:
+numpy.median(a, axis=None, out=None, overwrite_input=False, keepdims=False)
+Compute the median along the specified axis.
+Returns the median of the array elements.
+>>> a = np.array([[10, 7, 4], [3, 2, 1]])
+>>> a
+array([[10,  7,  4],
+       [ 3,  2,  1]])
+>>> np.median(a)
+3.5
+>>> np.median(a, axis=0)
+array([ 6.5,  4.5,  2.5])
+>>> np.median(a, axis=1)
+array([ 7.,  2.])
+>>> m = np.median(a, axis=0)
+>>> out = np.zeros_like(m)
+>>> np.median(a, axis=0, out=m)
+array([ 6.5,  4.5,  2.5])
+>>> m
+array([ 6.5,  4.5,  2.5])
+>>> b = a.copy()
+>>> np.median(b, axis=1, overwrite_input=True)
+array([ 7.,  2.])
+>>> assert not np.all(a==b)
+>>> b = a.copy()
+>>> np.median(b, axis=None, overwrite_input=True)
+3.5
+>>> assert not np.all(a==b)
+
+
+numpy.minimun:
+numpy.minimum(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj]) = <ufunc 'minimum'>¶
+Element-wise minimum of array elements.
+Compare two arrays and returns a new array containing the element-wise minima. If one of the elements being compared is 
+a NaN, then that element is returned. If both elements are NaNs then the first is returned. The latter distinction is 
+important for complex NaNs, which are defined as at least one of the real or imaginary parts being a NaN. The net 
+effect is that NaNs are propagated.
+>>> np.minimum([2, 3, 4], [1, 5, 2])
+array([1, 3, 2])
+>>> np.minimum(np.eye(2), [0.5, 2]) # broadcasting
+array([[ 0.5,  0. ],
+       [ 0. ,  1. ]])
+>>> np.minimum([np.nan, 0, np.nan],[0, np.nan, np.nan])
+array([ NaN,  NaN,  NaN])
+>>> np.minimum(-np.Inf, 1)
+-inf
+
+
+numpy.nonzero:
+>>> x = np.array([[1,0,0], [0,2,0], [1,1,0]])
+>>> x
+array([[1, 0, 0],
+       [0, 2, 0],
+       [1, 1, 0]])
+>>> np.nonzero(x)
+(array([0, 1, 2, 2]), array([0, 1, 0, 1]))
+>>> x[np.nonzero(x)]
+array([1, 2, 1, 1])
+>>> np.transpose(np.nonzero(x))
+array([[0, 0],
+       [1, 1],
+       [2, 0],
+       [2, 1])
+A common use for nonzero is to find the indices of an array, where a condition is True. Given an array a, the 
+condition a > 3 is a boolean array and since False is interpreted as 0, np.nonzero(a > 3) yields the indices of the a
+where the condition is true.
+>>> a = np.array([[1,2,3],[4,5,6],[7,8,9]])
+>>> a > 3
+array([[False, False, False],
+       [ True,  True,  True],
+       [ True,  True,  True]])
+>>> np.nonzero(a > 3)
+(array([1, 1, 1, 2, 2, 2]), array([0, 1, 2, 0, 1, 2]))
+The nonzero method of the boolean array can also be called.
+>>> (a > 3).nonzero()
+(array([1, 1, 1, 2, 2, 2]), array([0, 1, 2, 0, 1, 2]))
+
+
+numpy.outer:
+Compute the outer product of two vectors.
+Given two vectors, a = [a0, a1, ..., aM] and b = [b0, b1, ..., bN], the outer product [1] is:
+[[a0*b0  a0*b1 ... a0*bN ]
+ [a1*b0    .
+ [ ...          .
+ [aM*b0            aM*bN ]]
+>>> rl = np.outer(np.ones((5,)), np.linspace(-2, 2, 5))
+>>> rl
+array([[-2., -1.,  0.,  1.,  2.],
+       [-2., -1.,  0.,  1.,  2.],
+       [-2., -1.,  0.,  1.,  2.],
+       [-2., -1.,  0.,  1.,  2.],
+       [-2., -1.,  0.,  1.,  2.]])
+>>> im = np.outer(1j*np.linspace(2, -2, 5), np.ones((5,)))
+>>> im
+array([[ 0.+2.j,  0.+2.j,  0.+2.j,  0.+2.j,  0.+2.j],
+       [ 0.+1.j,  0.+1.j,  0.+1.j,  0.+1.j,  0.+1.j],
+       [ 0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j,  0.+0.j],
+       [ 0.-1.j,  0.-1.j,  0.-1.j,  0.-1.j,  0.-1.j],
+       [ 0.-2.j,  0.-2.j,  0.-2.j,  0.-2.j,  0.-2.j]])
+>>> grid = rl + im
+>>> grid
+array([[-2.+2.j, -1.+2.j,  0.+2.j,  1.+2.j,  2.+2.j],
+       [-2.+1.j, -1.+1.j,  0.+1.j,  1.+1.j,  2.+1.j],
+       [-2.+0.j, -1.+0.j,  0.+0.j,  1.+0.j,  2.+0.j],
+       [-2.-1.j, -1.-1.j,  0.-1.j,  1.-1.j,  2.-1.j],
+       [-2.-2.j, -1.-2.j,  0.-2.j,  1.-2.j,  2.-2.j]])
+An example using a “vector” of letters:
+>>> x = np.array(['a', 'b', 'c'], dtype=object)
+>>> np.outer(x, [1, 2, 3])
+array([[a, aa, aaa],
+       [b, bb, bbb],
+       [c, cc, ccc]], dtype=object)
+
+
+numpy.prod:
+numpy.prod(a, axis=None, dtype=None, out=None, keepdims=<no value>, initial=<no value>)
+Return the product of array elements over a given axis.
+By default, calculate the product of all elements:
+>>> np.prod([1.,2.])
+2.0
+Even when the input array is two-dimensional:
+>>> np.prod([[1.,2.],[3.,4.]])
+24.0
+But we can also specify the axis over which to multiply:
+>>> np.prod([[1.,2.],[3.,4.]], axis=1)
+array([  2.,  12.])
+If the type of x is unsigned, then the output type is the unsigned platform integer:
+>>> x = np.array([1, 2, 3], dtype=np.uint8)
+>>> np.prod(x).dtype == np.uint
+True
+If x is of a signed integer type, then the output type is the default platform integer:
+>>> x = np.array([1, 2, 3], dtype=np.int8)
+>>> np.prod(x).dtype == int
+True
+You can also start the product with a value other than one:
+>>> np.prod([1, 2], initial=5)
+10
+
+
+numpy.sum:
+>>> np.sum([0.5, 1.5])
+2.0
+>>> np.sum([0.5, 0.7, 0.2, 1.5], dtype=np.int32)
+1
+>>> np.sum([[0, 1], [0, 5]])
+6
+>>> np.sum([[0, 1], [0, 5]], axis=0)
+array([0, 6])
+>>> np.sum([[0, 1], [0, 5]], axis=1)
+array([1, 5])
+If the accumulator is too small, overflow occurs:
+>>> np.ones(128, dtype=np.int8).sum(dtype=np.int8)
+-128
+You can also start the sum with a value other than zero:
+>>> np.sum([10], initial=5)
+15
+
+
+numpy.trace:
+Return the sum along diagonals of the array.
+If a is 2-D, the sum along its diagonal with the given offset is returned, i.e., the sum of elements a[i,i+offset] for all i.
+If a has more than two dimensions, then the axes specified by axis1 and axis2 are used to determine the 2-D sub-arrays whose
+traces are returned. The shape of the resulting array is the same as that of a with axis1 and axis2 removed.
+
+>>> np.trace(np.eye(3))
+3.0
+>>> a = np.arange(8).reshape((2,2,2))
+>>> np.trace(a)
+array([6, 8])
+>>> a = np.arange(24).reshape((2,2,2,3))
+>>> np.trace(a).shape
+(2, 3)
+
+
+numpy.transpose:
+>>> x = np.arange(4).reshape((2,2))
+>>> x
+array([[0, 1],
+       [2, 3]])
+>>> np.transpose(x)
+array([[0, 2],
+       [1, 3]])
+>>> x = np.ones((1, 2, 3))
+>>> np.transpose(x, (1, 0, 2)).shape
+(2, 1, 3)
+
+
+numpy.var:
+Compute the variance along the specified axis.
+Returns the variance of the array elements, a measure of the spread of a distribution. The variance is computed for the
+flattened array by default, otherwise over the specified axis.
+>>> a = np.array([[1, 2], [3, 4]])
+>>> np.var(a)
+1.25
+>>> np.var(a, axis=0)
+array([ 1.,  1.])
+>>> np.var(a, axis=1)
+array([ 0.25,  0.25])
+In single precision, var() can be inaccurate:
+>>> a = np.zeros((2, 512*512), dtype=np.float32)
+>>> a[0, :] = 1.0
+>>> a[1, :] = 0.1
+>>> np.var(a)
+0.20250003
+Computing the variance in float64 is more accurate:
+>>> np.var(a, dtype=np.float64)
+0.20249999932944759
+>>> ((1-0.55)**2 + (0.1-0.55)**2)/2
+0.2025
+
+
+numpy.std:
+Compute the standard deviation along the specified axis.
+Returns the standard deviation, a measure of the spread of a distribution, of the array elements. The standard deviation 
+is computed for the flattened array by default, otherwise over the specified axis.
+>>> a = np.array([[1, 2], [3, 4]])
+>>> np.std(a)
+1.1180339887498949
+>>> np.std(a, axis=0)
+array([ 1.,  1.])
+>>> np.std(a, axis=1)
+array([ 0.5,  0.5])
+In single precision, std() can be inaccurate:
+>>> a = np.zeros((2, 512*512), dtype=np.float32)
+>>> a[0, :] = 1.0
+>>> a[1, :] = 0.1
+>>> np.std(a)
+0.45000005
+Computing the standard deviation in float64 is more accurate:
+>>> np.std(a, dtype=np.float64)
+0.44999999925494177
+
+
+numpy.vdot:
+Return the dot product of two vectors.
+The vdot(a, b) function handles complex numbers differently than dot(a, b). If the first argument is complex the complex 
+conjugate of the first argument is used for the calculation of the dot product.
+Note that vdot handles multidimensional arrays differently than dot: it does not perform a matrix product, but flattens 
+input arguments to 1-D vectors first. Consequently, it should only be used for vectors.
+>>> a = np.array([1+2j,3+4j])
+>>> b = np.array([5+6j,7+8j])
+>>> np.vdot(a, b)
+(70-8j)
+>>> np.vdot(b, a)
+(70+8j)
+Note that higher-dimensional arrays are flattened!
+>>> a = np.array([[1, 4], [5, 6]])
+>>> b = np.array([[4, 1], [2, 2]])
+>>> np.vdot(a, b)
+30
+>>> np.vdot(b, a)
+30
+>>> 1*4 + 4*1 + 5*2 + 6*2
+30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
