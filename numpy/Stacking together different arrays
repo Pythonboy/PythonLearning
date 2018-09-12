@@ -1,0 +1,76 @@
+Several arrays can be stacked together along different axes:
+
+>>> a = np.floor(10*np.random.random((2,2)))
+>>> a
+array([[ 8.,  8.],
+       [ 0.,  0.]])
+>>> b = np.floor(10*np.random.random((2,2)))
+>>> b
+array([[ 1.,  8.],
+       [ 0.,  4.]])
+>>> np.vstack((a,b))
+array([[ 8.,  8.],
+       [ 0.,  0.],
+       [ 1.,  8.],
+       [ 0.,  4.]])
+>>> np.hstack((a,b))
+array([[ 8.,  8.,  1.,  8.],
+       [ 0.,  0.,  0.,  4.]])
+  
+
+>>> from numpy import newaxis
+>>> np.column_stack((a,b))     # with 2D arrays
+array([[ 8.,  8.,  1.,  8.],
+       [ 0.,  0.,  0.,  4.]])
+>>> a = np.array([4.,2.])
+>>> b = np.array([3.,8.])
+>>> np.column_stack((a,b))     # returns a 2D array
+array([[ 4., 3.],
+       [ 2., 8.]])
+>>> np.hstack((a,b))           # the result is different
+array([ 4., 2., 3., 8.])
+>>> a[:,newaxis]               # this allows to have a 2D columns vector
+array([[ 4.],
+       [ 2.]])
+>>> np.column_stack((a[:,newaxis],b[:,newaxis]))
+array([[ 4.,  3.],
+       [ 2.,  8.]])
+>>> np.hstack((a[:,newaxis],b[:,newaxis]))   # the result is the same
+array([[ 4.,  3.],
+       [ 2.,  8.]])
+       
+       
+numpy.concatenate:
+Join a sequence of arrays along an existing axis.
+>>> a = np.array([[1, 2], [3, 4]])
+>>> b = np.array([[5, 6]])
+>>> np.concatenate((a, b), axis=0)
+array([[1, 2],
+       [3, 4],
+       [5, 6]])
+>>> np.concatenate((a, b.T), axis=1)
+array([[1, 2, 5],
+       [3, 4, 6]])
+>>> np.concatenate((a, b), axis=None)
+array([1, 2, 3, 4, 5, 6])
+This function will not preserve masking of MaskedArray inputs.
+>>> a = np.ma.arange(3)
+>>> a[1] = np.ma.masked
+>>> b = np.arange(2, 5)
+>>> a
+masked_array(data = [0 -- 2],
+             mask = [False  True False],
+       fill_value = 999999)
+>>> b
+array([2, 3, 4])
+>>> np.concatenate([a, b])
+masked_array(data = [0 1 2 2 3 4],
+             mask = False,
+       fill_value = 999999)
+>>> np.ma.concatenate([a, b])
+masked_array(data = [0 -- 2 2 3 4],
+             mask = [False  True False False False False],
+       fill_value = 999999)
+       
+       
+       
