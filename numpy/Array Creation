@@ -1,0 +1,199 @@
+>>> import numpy as np
+>>> a = np.array([2,3,4])
+>>> a
+array([2, 3, 4])
+>>> a.dtype
+dtype('int64')
+>>> b = np.array([1.2, 3.5, 5.1])
+>>> b.dtype
+dtype('float64')
+
+
+The type of the array can also be explicitly specified at creation time:
+>>> c = np.array( [ [1,2], [3,4] ], dtype=complex )
+>>> c
+array([[ 1.+0.j,  2.+0.j],
+       [ 3.+0.j,  4.+0.j]])
+       
+       
+Often, the elements of an array are originally unknown, but its size is known. Hence, NumPy offers several functions to 
+create arrays with initial placeholder content. These minimize the necessity of growing arrays, an expensive operation.
+
+The function zeros creates an array full of zeros, the function ones creates an array full of ones, and the function empty 
+creates an array whose initial content is random and depends on the state of the memory. By default, the dtype of the 
+created array is float64.
+
+>>> np.zeros( (3,4) )
+array([[ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  0.]])
+>>> np.ones( (2,3,4), dtype=np.int16 )                # dtype can also be specified
+array([[[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]],
+       [[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]]], dtype=int16)
+>>> np.empty( (2,3) )                                 # uninitialized, output may vary
+array([[  3.73603959e-262,   6.02658058e-154,   6.55490914e-260],
+       [  5.30498948e-313,   3.14673309e-307,   1.00000000e+000]])
+       
+       
+To create sequences of numbers, NumPy provides a function analogous to range that returns arrays instead of lists.      
+>>> np.arange( 10, 30, 5 )
+array([10, 15, 20, 25])
+>>> np.arange( 0, 2, 0.3 )                 # it accepts float arguments
+array([ 0. ,  0.3,  0.6,  0.9,  1.2,  1.5,  1.8])       
+       
+
+When arange is used with floating point arguments, it is generally not possible to predict the number of elements
+obtained, due to the finite floating point precision. For this reason, it is usually better to use the function linspace 
+that receives as an argument the number of elements that we want, instead of the step:
+>>> from numpy import pi
+>>> np.linspace( 0, 2, 9 )                 # 9 numbers from 0 to 2
+array([ 0.  ,  0.25,  0.5 ,  0.75,  1.  ,  1.25,  1.5 ,  1.75,  2.  ])
+>>> x = np.linspace( 0, 2*pi, 100 )        # useful to evaluate function at lots of points
+>>> f = np.sin(x)
+
+
+zeros_like:
+>>> x = np.arange(6)
+>>> x = x.reshape((2, 3))
+>>> x
+array([[0, 1, 2],
+       [3, 4, 5]])
+>>> np.zeros_like(x)
+array([[0, 0, 0],
+       [0, 0, 0]])
+>>>
+>>> y = np.arange(3, dtype=float)
+>>> y
+array([ 0.,  1.,  2.])
+>>> np.zeros_like(y)
+array([ 0.,  0.,  0.])
+
+
+ones_like:
+>>> x = np.arange(6)
+>>> x = x.reshape((2, 3))
+>>> x
+array([[0, 1, 2],
+       [3, 4, 5]])
+>>> np.ones_like(x)
+array([[1, 1, 1],
+       [1, 1, 1]])
+>>>
+>>> y = np.arange(3, dtype=float)
+>>> y
+array([ 0.,  1.,  2.])
+>>> np.ones_like(y)
+array([ 1.,  1.,  1.])
+
+
+empty_like:
+>>> a = ([1,2,3], [4,5,6])                         # a is array-like
+>>> np.empty_like(a)
+array([[-1073741821, -1073741821,           3],    #random
+       [          0,           0, -1073741821]])
+>>> a = np.array([[1., 2., 3.],[4.,5.,6.]])
+>>> np.empty_like(a)
+array([[ -2.00000715e+000,   1.48219694e-323,  -2.00000572e+000],#random
+       [  4.38791518e-305,  -2.00000715e+000,   4.17269252e-309]])
+
+
+arange: numpy.arange([start, ]stop, [step, ]dtype=None)
+>>> np.arange(3)
+array([0, 1, 2])
+>>> np.arange(3.0)
+array([ 0.,  1.,  2.])
+>>> np.arange(3,7)
+array([3, 4, 5, 6])
+>>> np.arange(3,7,2)
+array([3, 5])
+
+
+linespace : numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
+>>> np.linspace(2.0, 3.0, num=5)
+array([ 2.  ,  2.25,  2.5 ,  2.75,  3.  ])
+>>> np.linspace(2.0, 3.0, num=5, endpoint=False)
+array([ 2. ,  2.2,  2.4,  2.6,  2.8])
+>>> np.linspace(2.0, 3.0, num=5, retstep=True)
+(array([ 2.  ,  2.25,  2.5 ,  2.75,  3.  ]), 0.25)
+
+
+numpy.random.rand:
+numpy.random.rand(d0, d1, ..., dn)
+Random values in a given shape.
+Create an array of the given shape and populate it with random samples from a uniform distribution over [0, 1).
+
+>>> np.random.rand(3,2)
+array([[ 0.14022471,  0.96360618],  #random
+       [ 0.37601032,  0.25528411],  #random
+       [ 0.49313049,  0.94909878]]) #random
+
+
+numpy.random.randn:
+numpy.random.randn(d0, d1, ..., dn)
+Return a sample (or samples) from the “standard normal” distribution.
+If positive, int_like or int-convertible arguments are provided, randn generates an array of shape (d0, d1, ..., dn), 
+filled with random floats sampled from a univariate “normal” (Gaussian) distribution of mean 0 and variance 1 (if any 
+of the d_i are floats, they are first converted to integers by truncation). A single float randomly sampled from the 
+distribution is returned if no argument is provided.
+
+For random samples from N(\mu, \sigma^2), use:
+sigma * np.random.randn(...) + mu
+
+>>> np.random.randn()
+2.1923875335537315 #random
+Two-by-four array of samples from N(3, 6.25):
+
+>>> 2.5 * np.random.randn(2, 4) + 3
+array([[-4.49401501,  4.00950034, -1.81814867,  7.29718677],  #random
+       [ 0.39924804,  4.68456316,  4.99394529,  4.84057254]]) #random
+
+
+numpy.fromfunction
+Construct an array by executing a function over each coordinate.
+The resulting array therefore has a value fn(x, y, z) at coordinate (x, y, z).
+
+>>> np.fromfunction(lambda i, j: i == j, (3, 3), dtype=int)
+array([[ True, False, False],
+       [False,  True, False],
+       [False, False,  True]])
+>>> np.fromfunction(lambda i, j: i + j, (3, 3), dtype=int)
+array([[0, 1, 2],
+       [1, 2, 3],
+       [2, 3, 4]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
