@@ -1,0 +1,90 @@
+>>> a = np.array( [20,30,40,50] )
+>>> b = np.arange( 4 )
+>>> b
+array([0, 1, 2, 3])
+>>> c = a-b
+>>> c
+array([20, 29, 38, 47])
+>>> b**2
+array([0, 1, 4, 9])
+>>> 10*np.sin(a)
+array([ 9.12945251, -9.88031624,  7.4511316 , -2.62374854])
+>>> a<35
+array([ True, True, False, False])
+
+
+>>> a = np.ones(3, dtype=np.int32)
+>>> b = np.linspace(0,pi,3)
+>>> b.dtype.name
+'float64'
+>>> c = a+b
+>>> c
+array([ 1.        ,  2.57079633,  4.14159265])
+>>> c.dtype.name
+'float64'
+>>> d = np.exp(c*1j)        //e的n次方
+>>> d
+array([ 0.54030231+0.84147098j, -0.84147098+0.54030231j,
+       -0.54030231-0.84147098j])
+>>> d.dtype.name
+'complex128'
+
+
+>>> a = np.random.random((2,3))
+>>> a
+array([[ 0.18626021,  0.34556073,  0.39676747],
+       [ 0.53881673,  0.41919451,  0.6852195 ]])
+>>> a.sum()       //矩阵所有元素之和
+2.5718191614547998
+>>> a.min()
+0.1862602113776709
+>>> a.max()
+0.6852195003967595
+
+
+>>> b = np.arange(12).reshape(3,4)
+>>> b
+array([[ 0,  1,  2,  3],
+       [ 4,  5,  6,  7],
+       [ 8,  9, 10, 11]])
+>>>
+>>> b.sum(axis=0)                            # sum of each column
+array([12, 15, 18, 21])
+>>>
+>>> b.min(axis=1)                            # min of each row
+array([0, 4, 8])
+>>>
+>>> b.cumsum(axis=1)                         # cumulative sum along each row
+array([[ 0,  1,  3,  6],
+       [ 4,  9, 15, 22],
+       [ 8, 17, 27, 38]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
