@@ -1,0 +1,200 @@
+pandas.Series:
+
+pandas.Series( data, index, dtype, copy)
+data: 数据采取各种形式，如：ndarray，list，constants
+index : 索引值必须是唯一的和散列的，与数据的长度相同。 默认np.arange(n)如果没有索引被传递。
+dtype : dtype用于数据类型。如果没有，将推断数据类型
+copy : 复制数据，默认为false
+
+可以使用各种输入创建一个系列，如:
+1.数组
+2.字典
+3.标量值或常数
+
+一：创建Series
+
+（一）创建一个新的空系列
+#import the pandas library and aliasing as pd
+import pandas as pd
+s = pd.Series()
+print s
+
+输出结果：
+Series([], dtype: float64)
+
+
+（二）从ndarray中创建一个系列
+如果数据是ndarray，则传递的索引必须具有相同的长度。 如果没有传递索引值，那么默认的索引将是范围(n)，其中n是数组长度，
+即[0,1,2,3…. range(len(array))-1] - 1]
+
+#import the pandas library and aliasing as pd
+import pandas as pd
+import numpy as np
+data = np.array(['a','b','c','d'])
+s = pd.Series(data)
+print s
+输出结果：
+0   a
+1   b
+2   c
+3   d
+dtype: object
+
+#import the pandas library and aliasing as pd
+import pandas as pd
+import numpy as np
+data = np.array(['a','b','c','d'])
+s = pd.Series(data,index=[100,101,102,103])
+print s
+输出结果：
+100  a
+101  b
+102  c
+103  d
+dtype: object
+
+
+（三）从字典建立一个系列
+字典(dict)可以作为输入传递，如果没有指定索引，则按排序顺序取得字典键以构造索引。 如果传递了索引，索引中与标签对应的数据中的值将被拉出。
+
+#import the pandas library and aliasing as pd
+import pandas as pd
+import numpy as np
+data = {'a' : 0., 'b' : 1., 'c' : 2.}
+s = pd.Series(data)
+print s
+输出结果：
+a 0.0
+b 1.0
+c 2.0
+dtype: float64
+
+#import the pandas library and aliasing as pd
+import pandas as pd
+import numpy as np
+data = {'a' : 0., 'b' : 1., 'c' : 2.}
+s = pd.Series(data,index=['b','c','d','a'])
+print s
+输出结果：
+b 1.0
+c 2.0
+d NaN
+a 0.0
+dtype: float64
+（注意观察 - 索引顺序保持不变，缺少的元素使用NaN(不是数字)填充。）
+
+
+（四）从标量创建一个系列
+如果数据是标量值，则必须提供索引。将重复该值以匹配索引的长度。
+
+#import the pandas library and aliasing as pd
+import pandas as pd
+import numpy as np
+s = pd.Series(5, index=[0, 1, 2, 3])
+print s
+输出结果：
+0  5
+1  5
+2  5
+3  5
+dtype: int64
+
+
+二：检索数据
+
+（一）从具有位置的系列中访问数据
+系列中的数据可以使用类似于访问ndarray中的数据来访问。
+检索第一个元素。比如已经知道数组从零开始计数，第一个元素存储在零位置等等。
+
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve the first element
+print s[0]
+执行上面示例，得到以下结果 
+1
+
+
+检索系列中的前三个元素。 如果a:被插入到其前面，则将从该索引向前的所有项目被提取。 如果使用两个参数(使用它们之间)，两个索引之间的项目
+(不包括停止索引)。
+
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve the first three element
+print s[:3]
+执行上面示例，得到以下结果 
+a  1
+b  2
+c  3
+dtype: int64
+
+
+检索最后三个元素，参考以下示例代码 -
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve the last three element
+print s[-3:]
+执行上面示例代码，得到以下结果 
+c  3
+d  4
+e  5
+dtype: int64
+
+
+（二）使用标签检索数据(索引)
+一个系列就像一个固定大小的字典，可以通过索引标签获取和设置值。
+
+示例1
+使用索引标签值检索单个元素。
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve a single element
+print s['a']
+
+执行上面示例代码，得到以下结果 -
+1
+
+示例2
+使用索引标签值列表检索多个元素。
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve multiple elements
+print s[['a','c','d']]
+执行上面示例代码，得到以下结果 -
+a  1
+c  3
+d  4
+dtype: int64
+
+示例3
+
+如果不包含标签，则会出现异常。
+import pandas as pd
+s = pd.Series([1,2,3,4,5],index = ['a','b','c','d','e'])
+#retrieve multiple elements
+print s['f']
+执行上面示例代码，得到以下结果 
+…
+KeyError: 'f'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
