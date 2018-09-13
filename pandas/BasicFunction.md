@@ -10,20 +10,21 @@
 
 
 # axes示例
-'''
+```
 import pandas as pd
 import numpy as np
 
 #Create a series with 100 random numbers
 s = pd.Series(np.random.randn(4))
 print s
-'''
+```
 
 **输出结果**
-'''
+```
 0   0.967853
 1  -0.148368
 2  -1.395906
 3  -1.758394
 dtype: float64
-'''
+```  
+
