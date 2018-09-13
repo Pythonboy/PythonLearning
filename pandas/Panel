@@ -1,0 +1,141 @@
+面板(Panel)是3D容器的数据。面板数据一词来源于计量经济学，部分源于名称：Pandas - pan(el)-da(ta)-s。
+
+3轴(axis)这个名称旨在给出描述涉及面板数据的操作的一些语义。它们是 -
+1.tems - axis 0，每个项目对应于内部包含的数据帧(DataFrame)。
+2.major_axis - axis 1，它是每个数据帧(DataFrame)的索引(行)。
+3.minor_axis - axis 2，它是每个数据帧(DataFrame)的列。
+
+pandas.Panel()
+
+一 创建面板
+pandas.Panel(data, items, major_axis, minor_axis, dtype, copy)
+data : 数据采取各种形式，如：ndarray，series，map，lists，dict，constant和另一个数据帧(DataFrame)
+items : axis=0
+major_axis : axis=1
+minor_axis	: axis=2
+dtype	: 每列的数据类型
+copy	: 复制数据，默认 - false
+
+可以使用多种方式创建面板 -
+1.从ndarrays创建
+2.从DataFrames的dict创建
+
+(一）从3D ndarray创建
+
+# creating an empty panel
+import pandas as pd
+import numpy as np
+data = np.random.rand(2,4,5)
+p = pd.Panel(data)
+print p
+输出结果：
+<class 'pandas.core.panel.Panel'>
+Dimensions: 2 (items) x 4 (major_axis) x 5 (minor_axis)
+Items axis: 0 to 1
+Major_axis axis: 0 to 3
+Minor_axis axis: 0 to 4
+（注意 - 观察空面板和上面板的尺寸大小，所有对象都不同）
+
+
+（二）从DataFrame对象的dict创建面板
+
+#creating an empty panel
+import pandas as pd
+import numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+        'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p
+输出结果：
+<class 'pandas.core.panel.Panel'>
+Dimensions: 2 (items) x 4 (major_axis) x 5 (minor_axis)
+Items axis: 0 to 1
+Major_axis axis: 0 to 3
+Minor_axis axis: 0 to 4
+
+
+（三）创建一个空面板
+#creating an empty panel
+import pandas as pd
+p = pd.Panel()
+print p
+
+<class 'pandas.core.panel.Panel'>
+Dimensions: 0 (items) x 0 (major_axis) x 0 (minor_axis)
+Items axis: None
+Major_axis axis: None
+Minor_axis axis: None
+
+
+二 从面板中选择数据
+要从面板中选择数据，可以使用以下方式 -
+1.Items
+2.Major_axis
+3.Minor_axis
+
+（一）使用Items
+# creating an empty panel
+import pandas as pd
+import numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+        'Item2' : pd.DataFrame(np.random.randn(4, 2))}      //注意，这里的index和columns必须都保持一致
+p = pd.Panel(data)
+print p['Item1']
+输出结果：
+            0          1          2
+0    0.488224  -0.128637   0.930817
+1    0.417497   0.896681   0.576657
+2   -2.775266   0.571668   0.290082
+3   -0.400538  -0.144234   1.110535
+（上面示例有两个数据项，这里只检索item1。结果是具有4行和3列的数据帧(DataFrame)，它们是Major_axis和Minor_axis维。）
+
+
+(二）使用major_xs() 来访问行
+
+可以使用panel.major_axis(index)方法访问数据。 
+# creating an empty panel
+import pandas as pd
+import numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+        'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p.major_xs(1)
+
+执行上面示例代码，得到以下结果 -
+
+      Item1       Item2
+0   0.417497    0.748412
+1   0.896681   -0.557322
+2   0.576657       NaN
+
+
+（三）使用minor_xs()来访问列
+
+可以使用panel.minor_axis(index)方法访问数据。参考以下示例代码 
+# creating an empty panel
+import pandas as pd
+import numpy as np
+data = {'Item1' : pd.DataFrame(np.random.randn(4, 3)), 
+        'Item2' : pd.DataFrame(np.random.randn(4, 2))}
+p = pd.Panel(data)
+print p.minor_xs(1)
+
+执行上面示例代码，得到以下结果 -
+
+       Item1       Item2
+0   -0.128637   -1.047032
+1    0.896681   -0.557322
+2    0.571668    0.431953
+3   -0.144234    1.302466
+
+
+
+
+
+
+
+
+
+
+
+
