@@ -188,6 +188,354 @@ dtype: float64
 |编号|属性或方法|描述| 
 |:-:|:-:|:-:|
 |1|T|转置行和列|
+|2|axes|返回一个列，行轴标签和列轴标签作为唯一的成员|
+|3|dtypes|返回此对象中的数据类型(dtypes)|
+|4|empty|如果NDFrame完全为空[无项目]，则返回为True; 如果任何轴的长度为0|
+|5|ndim|轴/数组维度大小|
+|6|shape|返回表示DataFrame的维度的元组|
+|7|size|NDFrame中的元素数|
+|8|values|NDFrame的Numpy表示|
+|9|head()|返回开头前n行|
+|10|tail()|返回最后n行|
+
+**示例**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our data series is:")
+print df
+```
+```
+Our data series is:
+    Age   Name    Rating
+0   25    Tom     4.23
+1   26    James   3.24
+2   25    Ricky   3.98
+3   23    Vin     2.56
+4   30    Steve   3.20
+5   29    Minsu   4.60
+6   23    Jack    3.80
+```
+
+## T
+**返回DataFrame的转置。行和列将交换**
+```
+import pandas as pd
+import numpy as np
+# Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+# Create a DataFrame
+df = pd.DataFrame(d)
+print ("The transpose of the data series is:")
+print df.T
+```
+```
+The transpose of the data series is:
+         0     1       2      3      4      5       6
+Age      25    26      25     23     30     29      23
+Name     Tom   James   Ricky  Vin    Steve  Minsu   Jack
+Rating   4.23  3.24    3.98   2.56   3.2    4.6     3.8
+```
+
+## axes
+**返回行轴标签和列轴标签列表**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Row axis labels and column axis labels are:")
+print df.axes
+```
+```
+Row axis labels and column axis labels are:
+[RangeIndex(start=0, stop=7, step=1), Index([u'Age', u'Name', u'Rating'],
+dtype='object')]
+```
+
+## dtypes
+**返回每列的数据类型**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("The data types of each column are:")
+print df.dtypes
+```
+```
+The data types of each column are:
+Age     int64
+Name    object
+Rating  float64
+dtype: object
+```
+
+## empty
+**返回布尔值，表示对象是否为空; 返回True表示对象为空**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Is the object empty?")
+print df.empty
+```
+```
+Is the object empty?
+False
+```
+
+## ndim
+**返回对象的维数。根据定义，DataFrame是一个2D对象**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our object is:")
+print df
+print ("The dimension of the object is:")
+print df.ndim
+```
+```
+Our object is:
+      Age    Name     Rating
+0     25     Tom      4.23
+1     26     James    3.24
+2     25     Ricky    3.98
+3     23     Vin      2.56
+4     30     Steve    3.20
+5     29     Minsu    4.60
+6     23     Jack     3.80
+
+The dimension of the object is:
+2
+```
+
+## shape
+**返回表示DataFrame的维度的元组。 元组(a，b)，其中a表示行数，b表示列数**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our object is:")
+print df
+print ("The shape of the object is:")
+print df.shape
+```
+```
+Our object is:
+   Age   Name    Rating
+0  25    Tom     4.23
+1  26    James   3.24
+2  25    Ricky   3.98
+3  23    Vin     2.56
+4  30    Steve   3.20
+5  29    Minsu   4.60
+6  23    Jack    3.80
+
+The shape of the object is:
+(7, 3)
+```
+
+## size
+**返回DataFrame中的元素数**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our object is:")
+print df
+print ("The total number of elements in our object is:")
+print df.size
+```
+```
+Our object is:
+    Age   Name    Rating
+0   25    Tom     4.23
+1   26    James   3.24
+2   25    Ricky   3.98
+3   23    Vin     2.56
+4   30    Steve   3.20
+5   29    Minsu   4.60
+6   23    Jack    3.80
+
+The total number of elements in our object is:
+21
+```
+
+## values
+**将DataFrame中的实际数据作为NDarray返回**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our object is:")
+print df
+print ("The actual data in our data frame is:")
+print df.values
+```
+```
+Our object is:
+    Age   Name    Rating
+0   25    Tom     4.23
+1   26    James   3.24
+2   25    Ricky   3.98
+3   23    Vin     2.56
+4   30    Steve   3.20
+5   29    Minsu   4.60
+6   23    Jack    3.80
+The actual data in our data frame is:
+[[25 'Tom' 4.23]
+[26 'James' 3.24]
+[25 'Ricky' 3.98]
+[23 'Vin' 2.56]
+[30 'Steve' 3.2]
+[29 'Minsu' 4.6]
+[23 'Jack' 3.8]]
+```
+
+## head()
+**返回最前面的n行，默认返回5行**
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]),
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our data frame is:")
+print df
+print ("The first two rows of the data frame is:")
+print df.head(2)
+```
+```
+Our data frame is:
+    Age   Name    Rating
+0   25    Tom     4.23
+1   26    James   3.24
+2   25    Ricky   3.98
+3   23    Vin     2.56
+4   30    Steve   3.20
+5   29    Minsu   4.60
+6   23    Jack    3.80
+
+The first two rows of the data frame is:
+   Age   Name   Rating
+0  25    Tom    4.23
+1  26    James  3.24
+```
+
+## tail()
+**返回最后的n行，默认返回5行
+```
+import pandas as pd
+import numpy as np
+
+#Create a Dictionary of series
+d = {'Name':pd.Series(['Tom','James','Ricky','Vin','Steve','Minsu','Jack']),
+   'Age':pd.Series([25,26,25,23,30,29,23]), 
+   'Rating':pd.Series([4.23,3.24,3.98,2.56,3.20,4.6,3.8])}
+
+#Create a DataFrame
+df = pd.DataFrame(d)
+print ("Our data frame is:")
+print df
+print ("The last two rows of the data frame is:")
+print df.tail(2)
+```
+```
+Our data frame is:
+    Age   Name    Rating
+0   25    Tom     4.23
+1   26    James   3.24
+2   25    Ricky   3.98
+3   23    Vin     2.56
+4   30    Steve   3.20
+5   29    Minsu   4.60
+6   23    Jack    3.80
+
+The last two rows of the data frame is:
+    Age   Name    Rating
+5   29    Minsu    4.6
+6   23    Jack     3.8
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
