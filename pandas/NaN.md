@@ -1,4 +1,4 @@
-#NaN
+# NaN
 
 ## 检查缺失值
 **为了更容易地检测缺失值(以及跨越不同的数组dtype)，Pandas提供了isnull()和notnull()函数，它们也是Series和DataFrame对象的方法**
