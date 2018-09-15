@@ -1,5 +1,15 @@
 # PythonLearning
 
+## Numpy库
+- 矩阵的建立
+- 矩阵的基本操作
+- 矩阵的分割和合并
+- Numpy模块中的基本函数
+- Numpy中矩阵shape的改变方法
+- Numpy中的索引问题
+- Numpy中IO操作
+
+
 ## Pandas库
 - Pandas系列
 - Pandas数据帧（DataFrame)
