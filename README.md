@@ -33,3 +33,15 @@
 - Pandas日期功能
 - Pandas分类数据
 - Pandas IO 工具
+
+## Matplotlib库
+- scatter 散点图
+- plot 折线图
+- bar 柱状图
+- hist 直方图
+- pie 饼状图
+- box 箱形图
+- 颜色与样式
+- 图例与坐标轴
+- 注释
+- 总结
