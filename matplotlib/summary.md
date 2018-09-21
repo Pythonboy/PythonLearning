@@ -119,6 +119,27 @@ for label in ax.get_xticklabels() + ax.get_yticklabels():
     label.set_bbox(dict(facecolor = 'green', edgecolor = 'None', alpha = 0.7))
 ```
 
+# 移动spines
+spines包括图片上下左右4条边界和它们的下标，就是正方形的4条边。它们可以被挪到任意的位置，现在，它们还在边界上。我们要把它们移到中间。首先，将上边界和右边界的颜色设置为none，就隐藏了。然后我们将下边界和左边界移动到数据空间的0处。 
+```
+# plt.gca()获取当前ax
+ax = plt.gca()
+ax.spines['right'].set_color('none')
+ax.spines['top'].set_color('none')
+ax.xaxis.set_ticks_position('bottom')
+# set_position中的参数元组的第二个值可取-1，0，1分别代表相对‘data’的不同的位置
+ax.spines['bottom'].set_position(('data', 0))
+ax.yaxis.set_ticks_position('left')
+ax.spines['left'].set_position(('data', 0))
+```
+
+# 设置坐标轴下标名
+```
+# r''是为了转义里面的转义字符\
+plt.xticks([-np.pi, -np.pi/2, 0, np.pi/2, np.pi], [r'$-\pi$', r'$-\pi/2$', r'$0$', r'$+\pi/2$', r'$+\pi$'])
+plt.yticks([-1, 0, +1], [r'$-1$', r'$0$', r'$+1$'])
+```
+
 # 添加注解和绘制点以及在图形上绘制线或点
 ```
 # -*- coding: utf-8 -*-
@@ -553,4 +574,124 @@ ani = animation.FuncAnimation(fig=fig,
 
 plt.show()
 ```
+
+# Matplotlib组件
+## Figure
+一个figure就是一个在GUI中名为“Figure#”的一个窗口，它的计数是从1开始的，跟普通的Python计数方式不同，而是MATLAB的计数风格。下面是几个定义figure外形的参数
+|参数	|默认值	|描述|
+|:-:|:-:|:-:|
+|num	|1|	figure编号|
+|figsize|	figure.figsize|	figure长和宽|
+|dpi	|figure.dpi|	像素|
+|facecolor	|figure.facecolor|	背景颜色|
+|edgecolor	|figure.edgecolor|	边缘颜色|
+|frameon	|True|	边框有无|
+
+## subplot
+subplot是用来布局plots的，需要指定（行、列、序号）
+```
+from pylab import *
+import matplotlib.gridspec as gridspec
+
+G = gridspec.GridSpec(3, 3)
+
+axes_1 = subplot(G[0, :])
+xticks([]), yticks([])
+text(0.5,0.5, 'Axes 1',ha='center',va='center',size=24,alpha=.5)
+
+axes_2 = subplot(G[1,:-1])
+xticks([]), yticks([])
+text(0.5,0.5, 'Axes 2',ha='center',va='center',size=24,alpha=.5)
+
+axes_3 = subplot(G[1:, -1])
+xticks([]), yticks([])
+text(0.5,0.5, 'Axes 3',ha='center',va='center',size=24,alpha=.5)
+
+axes_4 = subplot(G[-1,0])
+xticks([]), yticks([])
+text(0.5,0.5, 'Axes 4',ha='center',va='center',size=24,alpha=.5)
+
+axes_5 = subplot(G[-1,-2])
+xticks([]), yticks([])
+text(0.5,0.5, 'Axes 5',ha='center',va='center',size=24,alpha=.5)
+
+#plt.savefig('../figures/gridspec.png', dpi=64)
+show()
+```
+
+```
+from pylab import *
+
+subplot(2,2,1)
+xticks([]), yticks([])
+text(0.5,0.5, 'subplot(2,2,1)',ha='center',va='center',size=20,alpha=.5)
+
+subplot(2,2,2)
+xticks([]), yticks([])
+text(0.5,0.5, 'subplot(2,2,2)',ha='center',va='center',size=20,alpha=.5)
+
+subplot(2,2,3)
+xticks([]), yticks([])
+text(0.5,0.5, 'subplot(2,2,3)',ha='center',va='center',size=20,alpha=.5)
+
+subplot(2,2,4)
+xticks([]), yticks([])
+text(0.5,0.5, 'subplot(2,2,4)',ha='center',va='center',size=20,alpha=.5)
+
+# savefig('../figures/subplot-grid.png', dpi=64)
+show()
+```
+
+## Axes
+Axes和subplots很像，但它可以布局在figure的任意位置。所以如果我们想把一个小plot放在一个大plot里面，应该采用Axes。 
+```
+from pylab import *
+
+axes([0.1,0.1,.8,.8])
+xticks([]), yticks([])
+text(0.6,0.6, 'axes([0.1,0.1,.8,.8])',ha='center',va='center',size=20,alpha=.5)
+
+axes([0.2,0.2,.3,.3])
+xticks([]), yticks([])
+text(0.5,0.5, 'axes([0.2,0.2,.3,.3])',ha='center',va='center',size=16,alpha=.5)
+
+plt.savefig("../figures/axes.png",dpi=64)
+show()
+```
+
+```
+from pylab import *
+
+axes([0.1,0.1,.5,.5])
+xticks([]), yticks([])
+text(0.1,0.1, 'axes([0.1,0.1,.8,.8])',ha='left',va='center',size=16,alpha=.5)
+
+axes([0.2,0.2,.5,.5])
+xticks([]), yticks([])
+text(0.1,0.1, 'axes([0.2,0.2,.5,.5])',ha='left',va='center',size=16,alpha=.5)
+
+axes([0.3,0.3,.5,.5])
+xticks([]), yticks([])
+text(0.1,0.1, 'axes([0.3,0.3,.5,.5])',ha='left',va='center',size=16,alpha=.5)
+
+axes([0.4,0.4,.5,.5])
+xticks([]), yticks([])
+text(0.1,0.1, 'axes([0.4,0.4,.5,.5])',ha='left',va='center',size=16,alpha=.5)
+
+# plt.savefig("../figures/axes-2.png",dpi=64)
+show()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
