@@ -1,0 +1,74 @@
+# random.seed(a=None)
+初始化随机数生成器
+
+
+# Functions for integers
+## random.randrange(start, stop[, step])
+从区间（开始，停止，步骤）返回随机选择的元素
+
+## random.randint(a, b)
+Return a random integer N such that a <= N <= b，相当于random.randrange(a,b,1)
+
+# Functions for sequences
+## random.choice(seq)
+Return a random element from the non-empty sequence seq. If seq is empty, raises IndexError
+
+## random.choices(population, weights=None, *, cum_weights=None, k=1)
+Return a k sized list of elements chosen from the population with replacement. If the population is empty, raises IndexError
+
+## random.shuffle(x[, random])
+Shuffle the sequence x in place.
+
+## random.sample(population, k)
+Return a k length list of unique elements chosen from the population sequence or set. Used for random sampling without replacement.
+
+# Real-valued distributions
+## random.random()
+Return the next random floating point number in the range [0.0, 1.0).
+
+## random.uniform(a, b)
+Return a random floating point number N such that a <= N <= b for a <= b and b <= N <= a for b < a.
+
+## random.triangular(low, high, mode)
+Return a random floating point number N such that low <= N <= high and with the specified mode between those bounds. The low
+and high bounds default to zero and one. The mode argument defaults to the midpoint between the bounds, giving a symmetric 
+distribution.
+
+## random.betavariate(alpha, beta)
+Beta distribution. Conditions on the parameters are alpha > 0 and beta > 0. Returned values range between 0 and 1.
+
+## random.expovariate(lambd)¶
+Exponential distribution. lambd is 1.0 divided by the desired mean. It should be nonzero. (The parameter would be called
+“lambda”, but that is a reserved word in Python.) Returned values range from 0 to positive infinity if lambd is positive, 
+and from negative infinity to 0 if lambd is negative.
+
+## random.gammavariate(alpha, beta)
+Gamma distribution. (Not the gamma function!) Conditions on the parameters are alpha > 0 and beta > 0.
+
+## random.gauss(mu, sigma)
+Gaussian distribution. mu is the mean, and sigma is the standard deviation. This is slightly faster than the normalvariate() function defined below.
+
+## random.normalvariate(mu, sigma)
+Normal distribution. mu is the mean, and sigma is the standard deviation.
+
+## random.lognormvariate(mu, sigma)
+Log normal distribution. If you take the natural logarithm of this distribution, you’ll get a normal distribution with 
+mean mu and standard deviation sigma. mu can have any value, and sigma must be greater than zero.
+
+## random.weibullvariate(alpha, beta)
+Weibull distribution. alpha is the scale parameter and beta is the shape parameter.
+
+## random.paretovariate(alpha)
+Pareto distribution. alpha is the shape parameter.
+
+## random.vonmisesvariate(mu, kappa)
+mu is the mean angle, expressed in radians between 0 and 2*pi, and kappa is the concentration parameter, which must be
+greater than or equal to zero. If kappa is equal to zero, this distribution reduces to a uniform random angle over the 
+range 0 to 2*pi.
+
+
+
+
+
+
+
