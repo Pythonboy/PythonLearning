@@ -11,10 +11,10 @@ $$b = a \times x_{mean} + b$$
 
 ## 线性回归算法的评价方法
 ### 均方误差 MSE （Mean Square Error)
-$$MSE = \cfrac{\sum(y_{test}^i-y_{predict}^i)^2{m}$$
+$$MSE = \frac{\sum(y_{test}^i-y_{predict}^i)^2{m}$$
 
 ### 均方根误差 RMSE （Root Mean Squared Error)
-$$ RMSE = \sqrt{MSE} = \sqrt{\cfrac{\sum(y_{test}^i-y_{predict}^i)^2{m}}$$
+$$RMSE = \sqrt{MSE} = \sqrt{\frac{\sum(y_{test}^i-y_{predict}^i)^2{m}}$$
 
 ### 平方绝对误差 MAE (Mean Absolute Error)
-$$ MAE = \cfrac{\sum\midy_{test}^i-y_{predict}^i\mid}{m}$$
+$$MAE = \frac{\sum\mid y_{test}^i-y_{predict}^i \mid }{m}$$
