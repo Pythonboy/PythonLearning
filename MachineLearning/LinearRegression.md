@@ -29,7 +29,7 @@ $$RMSE = \sqrt{MSE} = \sqrt{\frac{\sum(y_{test}^i-y_{predict}^i)^2}{m}}$$
 $$MAE = \frac{\sum\mid y_{test}^i-y_{predict}^i \mid }{m}$$
 
 ### R_Squared
-$$R^2 = 1 - \frac{\sum(y_{predict}^i - y_{true}^i)^2}{\sum (y_{mean} - y_{true}^i)^2} = 1 - \frac{MSE(y_{predict},y_true)}{Var(y)}$$
+$$R^2 = 1 - \frac{\sum(y_{predict}^i - y_{true}^i)^2}{\sum (y_{mean} - y_{true}^i)^2} = 1 - \frac{MSE(y_{predict},y_{true})}{Var(y)}$$
 - $R^2<=1$
 - $R^2$越大越好。当我们的预测模型不犯任何错误时，$R^2$得到最大值1
 - 当我们的模型等于基准模型时，$R^2$为0
