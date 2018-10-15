@@ -5,16 +5,16 @@
 
 ## 简单线性回归算法的推导
 **其实就是通过向量化运算和最小二乘法导出a,b**
-$$\frac{\sum(X_i^2 - X_mean^2)(y_i^2 - y_mean^2)}{\sum(X_i^2 - X_mean^2)^2}$$
+$$a = \frac{\sum(X_i^2 - X_{mean}^2)(y_i^2 - y_{mean}^2)}{\sum(X_i^2 - X_{mean}^2)^2}$$
 
-$$E = m* c^2$$
+$$b = a \times x_{mean} + b$$
 
+## 线性回归算法的评价方法
+### 均方误差 MSE （Mean Square Error)
+$$MSE = \cfrac{\sum(y_{test}^i-y_{predict}^i)^2{m}$$
 
-$E = mc^2$
+### 均方根误差 RMSE （Root Mean Squared Error)
+$$ RMSE = \sqrt{MSE} = \sqrt{\cfrac{\sum(y_{test}^i-y_{predict}^i)^2{m}}$$
 
-$$
-x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
-$$
-
-$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
-
+### 平方绝对误差 MAE (Mean Absolute Error)
+$$ MAE = \cfrac{\sum\midy_{test}^i-y_{predict}^i\mid}{m}$$
