@@ -5,9 +5,16 @@
 
 ## 简单线性回归算法的推导
 **其实就是通过向量化运算和最小二乘法导出a,b**
+$$\frac{\sum(X_i^2 - X_mean^2)(y_i^2 - y_mean^2)}{\sum(X_i^2 - X_mean^2)^2}$$
+
+$$E = m* c^2$$
 
 
+$E = mc^2$
 
+$$
+x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+$$
 
-
+$x=\frac{-b\pm\sqrt{b^2-4ac}}{2a}$
 
