@@ -109,8 +109,8 @@ $$N_{total} = TP + TN + FP + FN$$
 $$Acc = \frac{TP + TN}{TP + TN + FP + FN} = \frac{TP + TN}{P + N}$$
 进一步，我们可以定义recall ，precision， F1-score 如下所示：
 $$Recall = \frac{TP}{TP+FN} = \frac{TP}{P}$$
-$$Precision = \frac{TP}{TP+FP}$$
-$$F1 = \frac{2TP}{2TP+FP+FN} = \frac{2*Precision*Recall}{Precision+Recall}$$
+$$Precision = \frac{TP}{TP+FP}$$             
+$F1 = \frac{2*TP}{2*TP+FP+FN} = \frac{2*Precision*Recall}{Precision+Recall}$
 
 **recall 体现了分类模型H对正样本的识别能力，recall 越高，说明模型对正样本的识别能力越强，precision 体现了模型对负样本的区分能力
 ，precision越高，说明模型对负样本的区分能力越强。F1-score 是两者的综合。F1-score 越高，说明分类模型越稳健**
