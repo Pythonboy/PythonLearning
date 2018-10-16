@@ -116,7 +116,7 @@ $$F1 = \frac{2TP}{2TP + FP + FN} = \frac{2*Precision*Recall}{Precision + Recall}
 ，precision越高，说明模型对负样本的区分能力越强。F1-score 是两者的综合。F1-score 越高，说明分类模型越稳健**
 
 有时候，通过对recall 与 precision 赋予不同的权重，表示对分类模型的偏好：
-$$F_{\beta} = \frac{(1+\beta^2)TP}{(1+\beta^2)TP + \beta^2FN + FP} = \frac{(1+\beta^2)*Precision*Recall }{\beta^2 * Precision + Recall }$$
+$$F_{\beta} = \frac{(1+\beta^2)TP}{(1+\beta ^2)TP + \beta ^2FN + FP} = \frac{(1+\beta ^2)*Precision*Recall }{\beta ^2 * Precision + Recall }$$
 **可以看到，当 β=1，那么Fβ就退回到F1了，β 其实反映了模型分类能力的偏好，β>1 的时候，precision的权重更大，为了提高Fβ，我们希望precision 越小，而recall 应该越大，说明模型更偏好于提升recall，意味着模型更看重对正样本的识别能力； 而 β<1 的时候，recall 的权重更大，因此，我们希望recall越小，而precision越大，模型更偏好于提升precision，意味着模型更看重对负样本的区分能力。**
 
 
