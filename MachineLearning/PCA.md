@@ -7,3 +7,8 @@
 # 步骤
 1. 对所有样本进行均值归零（demean）
 ![25](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/25.jpg)
+![26](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/26.jpg)
+![27](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/27.jpg)
+![28](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/28.jpg)
+![29](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/29.jpg)
+![30](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/30.jpg)
