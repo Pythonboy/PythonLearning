@@ -12,3 +12,8 @@
 ![28](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/28.jpg)
 ![29](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/29.jpg)
 ![30](https://raw.githubusercontent.com/Pythonboy/Image/master/SK/30.jpg)
+
+# 他山之玉
+>[从零开始实现主成分分析(PCA)算法](https://blog.csdn.net/u013719780/article/details/78352262)
+>
+>[PCA的数学原理](http://blog.codinglabs.org/articles/pca-tutorial.html)
