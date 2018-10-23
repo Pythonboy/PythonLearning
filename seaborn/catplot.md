@@ -48,3 +48,5 @@ Categorical estimate plots:
 - **palette** : Colors to use for the different levels of the `hue` variable
 
 - **legend** : If `True` and there is a `hue` variable, draw a legend on the plot.
+
+- **col_wrap** : “Wrap” the column variable at this width, so that the column facets span multiple rows. 
